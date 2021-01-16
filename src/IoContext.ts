@@ -1,7 +1,7 @@
 import { NetworkMessage } from './Message/NetworkMessage';
 import * as socketio from "socket.io";
 import * as http from "http";
-import { RoomManager } from "./RoomManager";
+import { RoomManager } from "./Structure/RoomManager";
 import { GuestMessage } from "./Message/RoomMessage";
 
 export class IoContext{
