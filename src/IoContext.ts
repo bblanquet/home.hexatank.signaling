@@ -154,7 +154,7 @@ export class IoContext{
             this._isCollecting = true;
             let collector = setInterval(() => {
                 console.log('[collecting] start');
-                if (this._ioServer && this._ioServer.sockets) {
+                if (this._ioServer && this._ioServer.sockets.sockets.values.length > 0) {
                     if (this._roomManager && this._roomManager.Rooms) {
                         console.log('[collecting] rooms ' + this._roomManager.Rooms.length);
                         if (this._roomManager.Rooms.length === 0) {
