@@ -11,7 +11,6 @@ export class IoContext{
 
     constructor(httpServer:http.Server){
         this._ioServer = new socketio.Server(httpServer);
-
         console.log('START io server ');
 
         this._ioServer.on('connection', (socket) => {
