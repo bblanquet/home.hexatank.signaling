@@ -16,7 +16,7 @@ module.exports = (env) => {
 		// Configure output folder and file
 		output: {
 			path: path.resolve(__dirname, 'dist'),
-            filename: 'main.js',
+            filename: 'meetingPoint.js',
             publicPath: '/'
 		},
 
