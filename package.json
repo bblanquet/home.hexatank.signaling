@@ -1,5 +1,5 @@
 {
-  "name": "express",
+  "name": "meetingpoint",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/node": "^14.14.10",
+    "@types/node": "^14.14.21",
     "node-loader": "^1.0.2",
     "nodemon": "^2.0.6",
     "rimraf": "^3.0.2",
@@ -26,6 +26,7 @@
   "dependencies": {
     "@types/express": "^4.17.9",
     "@types/socket.io": "^2.1.12",
+    "express": "^4.17.1",
     "socket.io": "^3.1.0"
   }
 }
