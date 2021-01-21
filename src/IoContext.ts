@@ -1,6 +1,6 @@
 import { NetworkMessage } from './Message/NetworkMessage';
 import * as socketio from "socket.io";
-import * as http from "http";
+import * as https from "https";
 import { RoomManager } from "./Structure/RoomManager";
 import { GuestMessage } from "./Message/RoomMessage";
 
@@ -9,8 +9,13 @@ export class IoContext{
     private _isCollecting:boolean = false;
     private _roomManager:RoomManager = new RoomManager();
 
-    constructor(httpServer:http.Server){
-        this._ioServer = new socketio.Server(httpServer);
+    constructor(httpServer:https.Server){
+        this._ioServer = new socketio.Server(httpServer,{
+            cors:{
+                origin: true, 
+                credentials: true
+            }
+        });
         console.log('START io server ');
 
         this._ioServer.on('connection', (socket) => {

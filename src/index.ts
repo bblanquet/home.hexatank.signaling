@@ -1,11 +1,11 @@
-import { IoContext } from './IoContext';
+import * as https from "https";
 import e from 'express';
-import * as http from "http";
+import * as fs from "fs";
+import { IoContext } from './IoContext';
 
-const app: e.Application = e();
-const httpServer = http.createServer(app);
-const ioContext = new IoContext(httpServer);
-httpServer.listen(5000,()=>{console.log("listen 5000")});
-app.get('/', function(req, res) {
-	res.sendFile(__dirname + '/index.html');
-});
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/kimchistudio.tech/privkey.pem');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/kimchistudio.tech/fullchain.pem');
+const credentials = { key: privateKey, cert: certificate };
+new IoContext(https.createServer(credentials, e()).listen(5000,function(){
+	console.log('listening on *:5000');
+}));
