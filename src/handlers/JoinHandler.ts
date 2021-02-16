@@ -12,8 +12,8 @@ export class JoinHandler extends Handler {
 		socket.on('Join', (msg: GuestMessage) => {
 			console.log('[joining] Room ' + msg.RoomName + ' Player ' + msg.PlayerName);
 			this.Create(msg.RoomName);
-			let room = this.roomManager.Get(msg.RoomName);
-			if (msg.Key) {
+			const room = this.roomManager.Get(msg.RoomName);
+			if (msg.Key) { //if user is disconnected?
 				socket.join(msg.RoomName);
 				room.ChangeId(msg.PlayerName, socket.id);
 				console.log('[joined again] Room ' + msg.RoomName + ' Player ' + msg.PlayerName);

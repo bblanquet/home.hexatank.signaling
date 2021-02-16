@@ -24,7 +24,7 @@ export class EmptyRoomCleaner {
             this._isCollecting = true;
             let collector = setInterval(() => {
                 console.log('[collecting] start');
-                if (this.ioServer && this.ioServer.sockets.sockets.values.length > 0) {
+                if (this.ioServer.sockets.sockets.values.length > 0) {
                     if (this.roomManager && this.roomManager.Rooms) {
                         console.log('[collecting] rooms ' + this.roomManager.Rooms.length);
                         if (this.roomManager.Rooms.length === 0) {

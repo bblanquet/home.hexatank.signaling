@@ -1,10 +1,10 @@
-import { GuestMessage } from './../Message/RoomMessage';
+import { GuestMessage } from '../Message/RoomMessage';
 import * as socketio from "socket.io";
 import { Handler } from './Handler';
 import { EmptyRoomCleaner } from '../EmptyRoomCleaner';
 import { RoomManager } from '../Structure/RoomManager';
 
-export class OffHandler extends Handler{
+export class LeavingHandler extends Handler{
     constructor(private _garbage:EmptyRoomCleaner,roomManager:RoomManager,ioServer:socketio.Server){
         super(roomManager,ioServer)
     }
