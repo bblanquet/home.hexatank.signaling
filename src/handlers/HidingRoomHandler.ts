@@ -2,7 +2,7 @@ import { Socket } from 'socket.io';
 import { GuestMessage } from '../Message/RoomMessage';
 import { Handler } from './Handler';
 
-export class HideHandler extends Handler {
+export class HidingRoomHandler extends Handler {
 	public On(socket: Socket): void {
         socket.on('Hide', (msg: GuestMessage) => {
             if (this.roomManager.Exist(msg.RoomName)) {

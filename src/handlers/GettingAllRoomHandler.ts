@@ -2,7 +2,7 @@ import { Socket } from 'socket.io';
 import { GuestMessage } from '../Message/RoomMessage';
 import { Handler } from './Handler';
 
-export class AllRoomHandler extends Handler {
+export class GettingAllRoomHandler extends Handler {
 	public On(socket: Socket): void {
         socket.on('Rooms', (mg: GuestMessage) => {
             this.ioServer

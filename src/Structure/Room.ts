@@ -22,13 +22,15 @@ export class Room {
 	}
 
 	AddPlayer(name:string, id:string) {
+		console.log(`[ADDED] [ROOM] ${this.Name} [PLAYER] ${name}`)
 		let player = new Player();
 		player.Name = name;
 		player.Id = id;
 		this.Players.push(player);
 	}
 
-	ChangeId(name:string, id:string) {
+	UpdatePlayerId(name:string, id:string) {
+		console.log(`[UPDATED] [ROOM] ${this.Name} [PLAYER] ${name}`)
 		this.RemovePlayer(name);
 		let player = new Player();
 		player.Name = name;
@@ -41,6 +43,9 @@ export class Room {
 	}
 
 	RemovePlayer(playerName:string) {
+		if(this.Exist(playerName)){
+			console.log(`[DELETED] [ROOM] ${this.Name} [PLAYER] ${playerName}`)
+		}
 		this.Players = this.Players.filter((p) => p.Name !== playerName);
 	}
 }

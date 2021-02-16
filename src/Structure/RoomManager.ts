@@ -8,7 +8,6 @@ export class RoomManager {
 
 	Exist(roomName:string) {
 		let count = this.Rooms.filter((r) => r.Name === roomName).length;
-		console.log('[count] ' + roomName + ': ' + count);
 		return 0 < count;
 	}
 
@@ -17,21 +16,18 @@ export class RoomManager {
 			let room = new Room();
 			room.Name = roomName;
 			this.Rooms.push(room);
+			console.log(`[CREATED] [ROOM] ${roomName}`)
 		}
 	}
 
 	RemoveRoom(roomName:string) {
+		if(this.Exist(roomName)){
+			console.log(`[DELETED] [ROOM] ${roomName}`)
+		}
 		this.Rooms = this.Rooms.filter((r) => r.Name !== roomName);
 	}
 
 	Get(roomName:string) {
 		return this.Rooms.filter((r) => r.Name === roomName)[0];
-	}
-
-	RemovePlayer(playerName:string, roomName:string) {
-		if (this.Exist(roomName)) {
-			let room = this.Get(roomName);
-			room.RemovePlayer(playerName);
-		}
 	}
 }
