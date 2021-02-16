@@ -17,7 +17,6 @@ export class RoomManager {
 			let room = new Room();
 			room.Name = roomName;
 			this.Rooms.push(room);
-			console.log('[created] ' + roomName);
 		}
 	}
 

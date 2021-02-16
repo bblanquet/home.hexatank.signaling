@@ -13,6 +13,10 @@ export class Room {
 		this.Players = [];
 	}
 
+	public IsEmpty():boolean{
+		return this.PlayerNames.length === 0;
+	}
+
 	Exist(playerName:string) {
 		return 0 < this.Players.filter((p) => p.Name === playerName).length;
 	}
