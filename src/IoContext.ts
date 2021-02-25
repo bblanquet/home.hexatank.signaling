@@ -20,8 +20,8 @@ export class IoContext {
 	constructor(httpServer: http.Server) {
 		this._ioServer = new socketio.Server(httpServer, {
 			cors: {
-				origin: true,
-				credentials: true
+				origin: '*',
+				credentials: true,
 			}
 		});
 		this._roomManager = new RoomManager();
