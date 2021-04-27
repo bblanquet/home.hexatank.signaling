@@ -1,4 +1,4 @@
-import { RoomManager } from './../Structure/RoomManager';
+import { RoomManager } from '../Structure/RoomManager';
 import * as socketio from "socket.io";
 
 export abstract class Handler{

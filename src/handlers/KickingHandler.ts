@@ -10,7 +10,7 @@ export class KickingHandler extends Handler {
 				if (room.Exist(msg.PlayerName)) {
 					room.RemovePlayer(msg.PlayerName);
 					this.ioServer.in(msg.RoomName).emit('Kick', { PlayerName: msg.PlayerName });
-					this.ioServer.in(msg.RoomName).emit('Players', { Content: room.PlayerNames() });
+					this.ioServer.in(msg.RoomName).emit('Players', { Content: room.GetPlayernames() });
 				}
 			}
 		});

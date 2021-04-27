@@ -19,7 +19,7 @@ export class JoiningHandler extends Handler {
 				socket.join(msg.RoomName);
 				this.ioServer.to(socket.id).emit('Joined', { Content: room.Key });
 			}
-			this.ioServer.in(msg.RoomName).emit('Players', { Content: room.PlayerNames() });
+			this.ioServer.in(msg.RoomName).emit('Players', { Content: room.GetPlayernames() });
 		});
 	}
 }

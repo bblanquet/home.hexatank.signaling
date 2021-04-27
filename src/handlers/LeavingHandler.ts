@@ -15,7 +15,7 @@ export class LeavingHandler extends Handler{
                 if (room.Exist(msg.PlayerName)) {
                     let room = this.roomManager.Get(msg.RoomName);
                     room.RemovePlayer(msg.PlayerName);
-                    this.ioServer.in(msg.RoomName).emit('Players', { Content: room.PlayerNames() });
+                    this.ioServer.in(msg.RoomName).emit('Players', { Content: room.GetPlayernames() });
                     if (room.IsEmpty()) {
                         this.roomManager.RemoveRoom(msg.RoomName);
                     }

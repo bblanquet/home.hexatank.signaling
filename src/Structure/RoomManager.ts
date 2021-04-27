@@ -30,4 +30,8 @@ export class RoomManager {
 	Get(roomName:string) {
 		return this.Rooms.filter((r) => r.Name === roomName)[0];
 	}
+
+	GetRoomsFrom(playerId:string):Room[]{
+		return this.Rooms.filter(room=>room.ExistId(playerId));
+	}
 }
