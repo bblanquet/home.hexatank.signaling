@@ -1,17 +1,17 @@
-import { DisconnectingHandler } from './Handlers/DisconnectingHandler';
-import { KickingHandler } from './Handlers/KickingHandler';
-import { CreatingRoomHandler } from './Handlers/CreatingRoomHandler';
-import { JoiningHandler } from './Handlers/JoiningHandler';
-import { DestroyingRoomHandler } from './Handlers/DestroyingRoomHandler';
-import { ExistingRoomHandler } from './Handlers/ExistingRoomHandler';
-import { LeavingHandler } from './Handlers/LeavingHandler';
+import { DisconnectingHandler } from './H/DisconnectingHandler';
+import { KickingHandler } from './H/KickingHandler';
+import { CreatingRoomHandler } from './H/CreatingRoomHandler';
+import { JoiningHandler } from './H/JoiningHandler';
+import { DestroyingRoomHandler } from './H/DestroyingRoomHandler';
+import { ExistingRoomHandler } from './H/ExistingRoomHandler';
+import { LeavingHandler } from './H/LeavingHandler';
 import { NetworkMessage } from './Message/NetworkMessage';
 import * as socketio from 'socket.io';
 import * as http from 'http';
 import { RoomManager } from './Structure/RoomManager';
-import { FreeRoomHandler } from './Handlers/FreeRoomHandler';
-import { GettingAllRoomHandler } from './Handlers/GettingAllRoomHandler';
-import { HidingRoomHandler } from './Handlers/HidingRoomHandler';
+import { FreeRoomHandler } from './H/FreeRoomHandler';
+import { GettingAllRoomHandler } from './H/GettingAllRoomHandler';
+import { HidingRoomHandler } from './H/HidingRoomHandler';
 
 export class IoContext {
 	private _ioServer: socketio.Server;
