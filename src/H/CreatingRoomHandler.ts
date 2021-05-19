@@ -10,7 +10,7 @@ export class CreatingRoomHandler extends Handler {
 
 	public On(socket: socketio.Socket): void {
         socket.on('Create', (msg:GuestMessage)=> {
-            this.roomManager.AddRoom(msg.RoomName);
+            this.roomManager.AddRoom(msg.RoomName, msg.HasPassword,msg.Password);
         });
 	}
 }

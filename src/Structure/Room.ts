@@ -2,6 +2,8 @@ import { Player } from "./Player";
 
 export class Room {
     public Players:Player[];
+	public Password:string;
+	public HasPasword:boolean;
     public Key:string;
     public IsHidden:boolean;
     public Name:string;
@@ -10,6 +12,8 @@ export class Room {
 	constructor() {
 		this.Key = Math.random().toString(36).substring(7);
 		this.IsHidden = false;
+		this.Password = '';
+		this.HasPasword = false;
 		this.Name = '';
 		this.Players = [];
 	}
