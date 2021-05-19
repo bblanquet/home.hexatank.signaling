@@ -12,8 +12,9 @@ export class RoomManager {
 		return 0 < count;
 	}
 
-	Match(roomName: string, password: string) :boolean{
-		return this.Get(roomName).Password === password;
+	MatchPassword(roomName: string, password: string) :boolean{
+		const room = this.Get(roomName);
+		return !room.HasPassword || this.Get(roomName).Password === password;
 	}
 
 	ExistAndHasPassword(roomName:string) {
@@ -27,7 +28,7 @@ export class RoomManager {
 			room.HasPassword = hasPassword;
 			room.Name = roomName;
 			this.Rooms.push(room);
-			console.log(`[CREATED] [ROOM] ${roomName}`)
+			console.log(`[ADDED] [ROOM] ${roomName} [PASSWORD=${hasPassword}] ${password}`)
 		}
 	}
 
@@ -39,7 +40,9 @@ export class RoomManager {
 	}
 
 	Get(roomName:string) {
-		return this.Rooms.filter((r) => r.Name === roomName)[0];
+		const room =this.Rooms.filter((r) => r.Name === roomName)[0];
+		console.log(`[GET] [ROOM] ${roomName} [PASSWORD=${room.HasPassword}]`)
+		return room;
 	}
 
 	GetRoomsFrom(playerId:string):Room[]{

@@ -10,31 +10,17 @@ export class JoiningHandler extends Handler {
     }
 	public On(socket: socketio.Socket): void {
 		socket.on(PacketKind[PacketKind.Join], (msg: GuestMessage) => {
-			if(this.roomManager.ExistAndHasPassword(msg.RoomName)){
-				if(this.roomManager.Match(msg.RoomName,msg.Password)){
-					this.TryTojoin(msg, socket);
-				}else{
-					this.ioServer.to(socket.id).emit(PacketKind[PacketKind.Password], { Content: "wrong password" });
-				}
+			this.roomManager.AddRoom(msg.RoomName,msg.HasPassword,msg.Password);
+			const room = this.roomManager.Get(msg.RoomName);
+			if (msg.Key) { //if user got disconnected?
+				socket.join(msg.RoomName);
+				room.UpdatePlayerId(msg.PlayerName, socket.id);
+			} else {
+				room.AddPlayer(msg.PlayerName, socket.id);
+				socket.join(msg.RoomName);
+				this.ioServer.to(socket.id).emit(PacketKind[PacketKind.Joined], { Content: room.Key });
 			}
-			else
-			{
-				this.TryTojoin(msg, socket);
-			}
+			this.ioServer.in(msg.RoomName).emit(PacketKind[PacketKind.Players], { Content: room.GetPlayernames() });
 		});
-	}
-
-	private TryTojoin(msg: GuestMessage, socket: socketio.Socket) {
-		this.roomManager.AddRoom(msg.RoomName, msg.HasPassword, msg.Password);
-		const room = this.roomManager.Get(msg.RoomName);
-		if (msg.Key) { //if user got disconnected?
-			socket.join(msg.RoomName);
-			room.UpdatePlayerId(msg.PlayerName, socket.id);
-		} else {
-			room.AddPlayer(msg.PlayerName, socket.id);
-			socket.join(msg.RoomName);
-			this.ioServer.to(socket.id).emit(PacketKind[PacketKind.Joined], { Content: room.Key });
-		}
-		this.ioServer.in(msg.RoomName).emit(PacketKind[PacketKind.Players], { Content: room.GetPlayernames() });
 	}
 }

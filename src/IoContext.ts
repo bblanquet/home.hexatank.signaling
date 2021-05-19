@@ -12,6 +12,7 @@ import { RoomManager } from './Structure/RoomManager';
 import { FreeRoomHandler } from './H/FreeRoomHandler';
 import { GettingAllRoomHandler } from './H/GettingAllRoomHandler';
 import { HidingRoomHandler } from './H/HidingRoomHandler';
+import { PasswordHandler } from './H/PasswordHandler';
 
 export class IoContext {
 	private _ioServer: socketio.Server;
@@ -30,6 +31,7 @@ export class IoContext {
 			console.log('[CONNECTED] ' + socket.id);
 			[
 				new LeavingHandler( this._roomManager, this._ioServer),
+				new PasswordHandler( this._roomManager, this._ioServer),
 				new ExistingRoomHandler(this._roomManager, this._ioServer),
 				new GettingAllRoomHandler(this._roomManager, this._ioServer),
 				new KickingHandler(this._roomManager, this._ioServer),

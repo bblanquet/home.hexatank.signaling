@@ -43,7 +43,7 @@ export class Room {
 	}
 
 	public AddPlayer(name:string, id:string) {
-		console.log(`[ADDED] [ROOM] ${this.Name} [PLAYER] ${name}`)
+		console.log(`[ROOM] ${this.Name} [ADDED] [PLAYER] ${name}`)
 		let player = new Player();
 		player.Name = name;
 		player.Id = id;
@@ -51,7 +51,7 @@ export class Room {
 	}
 
 	public UpdatePlayerId(name:string, id:string) {
-		console.log(`[UPDATED] [ROOM] ${this.Name} [PLAYER] ${name}`)
+		console.log(`[ROOM] ${this.Name} [UPDATED]  [PLAYER] ${name}`)
 		this.RemovePlayer(name);
 		let player = new Player();
 		player.Name = name;
