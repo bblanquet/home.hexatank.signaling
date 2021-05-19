@@ -3,7 +3,7 @@ import { Player } from "./Player";
 export class Room {
     public Players:Player[];
 	public Password:string;
-	public HasPasword:boolean;
+	public HasPassword:boolean;
     public Key:string;
     public IsHidden:boolean;
     public Name:string;
@@ -13,7 +13,7 @@ export class Room {
 		this.Key = Math.random().toString(36).substring(7);
 		this.IsHidden = false;
 		this.Password = '';
-		this.HasPasword = false;
+		this.HasPassword = false;
 		this.Name = '';
 		this.Players = [];
 	}

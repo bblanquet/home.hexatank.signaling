@@ -17,14 +17,14 @@ export class RoomManager {
 	}
 
 	ExistAndHasPassword(roomName:string) {
-		return this.Exist(roomName) && this.Get(roomName).HasPasword;
+		return this.Exist(roomName) && this.Get(roomName).HasPassword;
 	}
 
 	AddRoom(roomName:string, hasPassword:boolean, password:string) {
 		if (!this.Exist(roomName)) {
 			let room = new Room();
 			room.Password = password;
-			room.HasPasword = hasPassword;
+			room.HasPassword = hasPassword;
 			room.Name = roomName;
 			this.Rooms.push(room);
 			console.log(`[CREATED] [ROOM] ${roomName}`)
