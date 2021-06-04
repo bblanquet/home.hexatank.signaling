@@ -24,11 +24,11 @@ export class RoomManager {
 	AddRoom(roomName:string, hasPassword:boolean, password:string) {
 		if (!this.Exist(roomName)) {
 			let room = new Room();
-			room.Password = password;
-			room.HasPassword = hasPassword;
+			room.Password = password === undefined? '':password;
+			room.HasPassword = hasPassword === undefined? false:hasPassword;
 			room.Name = roomName;
 			this.Rooms.push(room);
-			console.log(`[ADDED] [ROOM] ${roomName} [PASSWORD=${hasPassword}] ${password}`)
+			console.log(`[ADDED] [ROOM] ${roomName} [PASSWORD=${room.HasPassword}] ${room.Password}`)
 		}
 	}
 
@@ -41,7 +41,7 @@ export class RoomManager {
 
 	Get(roomName:string) {
 		const room =this.Rooms.filter((r) => r.Name === roomName)[0];
-		console.log(`[GET] [ROOM] ${roomName} [PASSWORD=${room.HasPassword}]`)
+		console.log(`[GET] [ROOM] ${room.Name} [PASSWORD=${room.HasPassword}]`)
 		return room;
 	}
 
