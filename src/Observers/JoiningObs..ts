@@ -11,6 +11,7 @@ export class JoiningObs extends Observer {
 	}
 	public On(socket: socketio.Socket): void {
 		socket.on(PacketKind[this.Kind], (msg: NetworkMessage<GuestMessage>) => {
+			console.log(`[JOIN REQUEST] ${msg.Content.RoomName}`)
 			const roomName = msg.Content.RoomName;
 			if (roomName) {
 				this.RoomManager.AddRoom(roomName, msg.Content.HasPassword, msg.Content.Password);

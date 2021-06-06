@@ -1,6 +1,6 @@
 import { DisconnectingObs } from './Observers/DisconnectingObs.';
 import { KickingObs } from './Observers/KickingObs.';
-import { CreatingRoomObs } from './Observers/CreatingRoomObs';
+// import { CreatingRoomObs } from './Observers/CreatingRoomObs';
 import { JoiningObs } from './Observers/JoiningObs.';
 import { DestroyingRoomObs } from './Observers/DestroyingRoomObs.';
 import { ExistingRoomObs } from './Observers/ExistingRoomObs.';
@@ -9,7 +9,7 @@ import { NetworkMessage } from './Message/NetworkMessage';
 import * as socketio from 'socket.io';
 import * as http from 'http';
 import { RoomManager } from './Structure/RoomManager';
-import { FreeRoomObs } from './Observers/FreeRoomObs.';
+import { AvailableRoomObs } from './Observers/AvailableRoomObs';
 import { GettingAllRoomObs } from './Observers/GettingAllRoomObs.';
 import { HidingRoomObs } from './Observers/HidingRoomObs.';
 import { PasswordObs } from './Observers/PasswordObs.';
@@ -37,15 +37,13 @@ export class IoContext {
 				new GettingAllRoomObs(PacketKind.Rooms, this._roomManager, this._ioServer),
 				new KickingObs(PacketKind.Kick, this._roomManager, this._ioServer),
 				new DestroyingRoomObs(PacketKind.Remove, this._roomManager, this._ioServer),
-				new FreeRoomObs(PacketKind.Available, this._roomManager, this._ioServer),
-				new CreatingRoomObs(PacketKind.Create, this._roomManager, this._ioServer),
+				new AvailableRoomObs(PacketKind.Available, this._roomManager, this._ioServer),
 				new JoiningObs(PacketKind.Join, this._roomManager, this._ioServer),
 				new HidingRoomObs(PacketKind.Hide, this._roomManager, this._ioServer),
 				new DisconnectingObs(PacketKind.disconnect, this._roomManager, this._ioServer)
 			].forEach((Obs) => {
 				Obs.On(socket);
 			});
-
 			[
 				PacketKind[PacketKind.Offer],
 				PacketKind[PacketKind.Candidate],

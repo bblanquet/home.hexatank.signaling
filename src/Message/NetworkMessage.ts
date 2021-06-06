@@ -6,7 +6,7 @@ export class NetworkMessage<T> implements INetworkMessage {
 	public Content: T;
 	public RoomName: string;
 
-	public Emitter: string;
+	public Emitter: string='server';
 	public Recipient: string;
 
 	public SeqNum: number;

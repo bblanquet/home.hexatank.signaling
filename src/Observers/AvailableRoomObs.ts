@@ -1,4 +1,4 @@
-import { NetworkMessage } from './../Message/NetworkMessage';
+import { NetworkMessage } from '../Message/NetworkMessage';
 import { PacketKind } from '../Message/PacketKind';
 import { Socket } from 'socket.io';
 import { GuestMessage } from '../Message/RoomMessage';
@@ -6,7 +6,7 @@ import { Observer } from './Observer';
 import * as socketio from 'socket.io';
 import { RoomManager } from '../Structure/RoomManager';
 
-export class FreeRoomObs extends Observer {
+export class AvailableRoomObs extends Observer {
 	constructor(kind: PacketKind, roomManager: RoomManager, ioServer: socketio.Server) {
 		super(kind, roomManager, ioServer);
 	}

@@ -12,6 +12,7 @@ export class ExistingRoomObs extends Observer{
     }
     public On(socket: Socket): void {
         socket.on(PacketKind[this.Kind], (msg:NetworkMessage<GuestMessage>)=> {
+            console.log(`[EXIST REQUEST] ${msg.Content.RoomName}`)
             const message = NetworkMessage.Create<{Exist:boolean,RoomName:string}>(this.Kind,{
                 Exist:this.RoomManager.Exist(msg.Content.RoomName),
                 RoomName:msg.Content.RoomName
