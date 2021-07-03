@@ -13,15 +13,15 @@ export class KickingObs extends Observer {
 
 	public On(socket: Socket): void {
 		socket.on(PacketKind[this.Kind], (msg: NetworkMessage<GuestMessage>) => {
-			if (this.RoomManager.Exist(msg.RoomName)) {
-				let room = this.RoomManager.Get(msg.RoomName);
+			if (this.RoomManager.Exist(msg.Content.RoomName)) {
+				let room = this.RoomManager.Get(msg.Content.RoomName);
 				if (room.Exist(msg.Content.PlayerName)) {
 					room.RemovePlayer(msg.Content.PlayerName);
 					this.Server
-						.in(msg.RoomName)
+						.in(msg.Content.RoomName)
 						.emit(PacketKind[this.Kind], NetworkMessage.Create<string>(this.Kind, msg.Content.PlayerName));
 					this.Server
-						.in(msg.RoomName)
+						.in(msg.Content.RoomName)
 						.emit(
 							PacketKind[PacketKind.Players],
 							NetworkMessage.Create<string[]>(PacketKind.Players, room.GetPlayernames())
