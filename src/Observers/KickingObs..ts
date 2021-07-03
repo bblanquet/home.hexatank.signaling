@@ -16,6 +16,7 @@ export class KickingObs extends Observer {
 			if (this.RoomManager.Exist(msg.Content.RoomName)) {
 				let room = this.RoomManager.Get(msg.Content.RoomName);
 				if (room.Exist(msg.Content.PlayerName)) {
+					console.log(`[KICKING REQUEST] ${msg.Content.RoomName} ${msg.Content.PlayerName}`);
 					room.RemovePlayer(msg.Content.PlayerName);
 					this.Server
 						.in(msg.Content.RoomName)
