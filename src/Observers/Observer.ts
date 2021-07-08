@@ -14,7 +14,8 @@ export abstract class Observer<T> {
 	}
 	protected abstract OnExec(message: NetworkMessage<T>): void;
 	protected GetIp(): string {
-		console.log(`[IP] ${this.Socket.id} - ${this.Socket.conn.remoteAddress.split(':')[3]}`);
-		return this.Socket.conn.remoteAddress.split(':')[3];
+		const ip = this.Socket.conn.headers['x-forwarded-for'] || this.Socket.conn.remoteAddress.split(':')[3];
+		console.log(`[IP] ${this.Socket.id} - ${ip}`);
+		return ip;
 	}
 }
