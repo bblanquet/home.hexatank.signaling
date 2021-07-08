@@ -1,13 +1,14 @@
-import { Player } from "./Player";
+import { Player } from './Player';
 
 export class Room {
-    public Players:Player[];
-	public Password:string;
-	public HasPassword:boolean;
-    public Key:string;
-    public IsHidden:boolean;
-    public Name:string;
-	public Max:number=4;
+	public Players: Player[];
+	public Password: string;
+	public HasPassword: boolean;
+	public Key: string;
+	public IsHidden: boolean;
+	public Name: string;
+	public Max: number = 4;
+	public Country: string;
 
 	constructor() {
 		this.Key = Math.random().toString(36).substring(7);
@@ -18,40 +19,40 @@ export class Room {
 		this.Players = [];
 	}
 
-	public PlayersCount():number{
+	public PlayersCount(): number {
 		return this.Players.length;
 	}
 
-	public IsFree():boolean{
+	public IsFree(): boolean {
 		return !this.IsFull() && !this.IsHidden;
 	}
 
-	public IsEmpty():boolean{
+	public IsEmpty(): boolean {
 		return this.GetPlayernames.length === 0;
 	}
 
-	public IsFull():boolean{
+	public IsFull(): boolean {
 		return this.Players.length === this.Max;
 	}
 
-	public Exist(playerName:string) {
+	public Exist(playerName: string) {
 		return this.Players.some((p) => p.Name === playerName);
 	}
 
-	public ExistId(playerId:string) {
+	public ExistId(playerId: string) {
 		return this.Players.some((p) => p.Id === playerId);
 	}
 
-	public AddPlayer(name:string, id:string) {
-		console.log(`[ROOM] ${this.Name} [ADDED] [PLAYER] ${name}`)
+	public AddPlayer(name: string, id: string) {
+		console.log(`[ROOM] ${this.Name} [ADDED] [PLAYER] ${name}`);
 		let player = new Player();
 		player.Name = name;
 		player.Id = id;
 		this.Players.push(player);
 	}
 
-	public UpdatePlayerId(name:string, id:string) {
-		console.log(`[ROOM] ${this.Name} [UPDATED]  [PLAYER] ${name}`)
+	public UpdatePlayerId(name: string, id: string) {
+		console.log(`[ROOM] ${this.Name} [UPDATED]  [PLAYER] ${name}`);
 		this.RemovePlayer(name);
 		let player = new Player();
 		player.Name = name;
@@ -63,9 +64,9 @@ export class Room {
 		return this.Players.map((p) => p.Name);
 	}
 
-	public RemovePlayer(playerName:string) {
-		if(this.Exist(playerName)){
-			console.log(`[DELETED] [ROOM] ${this.Name} [PLAYER] ${playerName}`)
+	public RemovePlayer(playerName: string) {
+		if (this.Exist(playerName)) {
+			console.log(`[DELETED] [ROOM] ${this.Name} [PLAYER] ${playerName}`);
 		}
 		this.Players = this.Players.filter((p) => p.Name !== playerName);
 	}

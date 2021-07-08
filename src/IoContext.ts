@@ -30,19 +30,17 @@ export class IoContext {
 		this._ioServer.on(PacketKind[PacketKind.connection], (socket: socketio.Socket) => {
 			console.log('[CONNECTED] ' + socket.id);
 			[
-				new LeavingObs(PacketKind.Leave, this._roomManager, this._ioServer),
-				new PasswordObs(PacketKind.Password, this._roomManager, this._ioServer),
-				new ExistingRoomObs(PacketKind.Exist, this._roomManager, this._ioServer),
-				new GettingAllRoomObs(PacketKind.Rooms, this._roomManager, this._ioServer),
-				new KickingObs(PacketKind.Kick, this._roomManager, this._ioServer),
-				new DestroyingRoomObs(PacketKind.Remove, this._roomManager, this._ioServer),
-				new AvailableRoomObs(PacketKind.Available, this._roomManager, this._ioServer),
-				new JoiningObs(PacketKind.Join, this._roomManager, this._ioServer),
-				new HidingRoomObs(PacketKind.Hide, this._roomManager, this._ioServer),
-				new DisconnectingObs(PacketKind.disconnect, this._roomManager, this._ioServer)
-			].forEach((Obs) => {
-				Obs.On(socket);
-			});
+				new LeavingObs(PacketKind.Leave, this._roomManager, this._ioServer, socket),
+				new PasswordObs(PacketKind.Password, this._roomManager, this._ioServer, socket),
+				new ExistingRoomObs(PacketKind.Exist, this._roomManager, this._ioServer, socket),
+				new GettingAllRoomObs(PacketKind.Rooms, this._roomManager, this._ioServer, socket),
+				new KickingObs(PacketKind.Kick, this._roomManager, this._ioServer, socket),
+				new DestroyingRoomObs(PacketKind.Remove, this._roomManager, this._ioServer, socket),
+				new AvailableRoomObs(PacketKind.Available, this._roomManager, this._ioServer, socket),
+				new JoiningObs(PacketKind.Join, this._roomManager, this._ioServer, socket),
+				new HidingRoomObs(PacketKind.Hide, this._roomManager, this._ioServer, socket),
+				new DisconnectingObs(PacketKind.disconnect, this._roomManager, this._ioServer, socket)
+			];
 			[
 				PacketKind[PacketKind.Offer],
 				PacketKind[PacketKind.Candidate],

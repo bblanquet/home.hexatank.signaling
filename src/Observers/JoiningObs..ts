@@ -2,41 +2,52 @@ import { NetworkMessage } from './../Message/NetworkMessage';
 import { PacketKind } from '../Message/PacketKind';
 import { GuestMessage } from '../Message/RoomMessage';
 import { Observer } from './Observer';
-import * as socketio from 'socket.io';
-import { RoomManager } from '../Structure/RoomManager';
+import { ContentChecker } from '../ContentChecker';
+import { lookup } from 'geoip-lite';
 
-export class JoiningObs extends Observer {
-	constructor(packet: PacketKind, roomManager: RoomManager, ioServer: socketio.Server) {
-		super(packet, roomManager, ioServer);
-	}
-	public On(socket: socketio.Socket): void {
-		socket.on(PacketKind[this.Kind], (msg: NetworkMessage<GuestMessage>) => {
-			console.log(`[JOIN REQUEST] ${msg.Content.RoomName}`)
+export class JoiningObs extends Observer<GuestMessage> {
+	public OnExec(msg: NetworkMessage<GuestMessage>): void {
+		if (
+			ContentChecker.IsOk(msg.Content.PlayerName) &&
+			ContentChecker.IsOk(msg.Content.RoomName) &&
+			(!msg.Content.HasPassword || (msg.Content.HasPassword && ContentChecker.IsOk(msg.Content.Password)))
+		) {
+			console.log(`[JOIN REQUEST] ${msg.Content.RoomName}`);
 			const roomName = msg.Content.RoomName;
-			if (roomName) {
-				this.RoomManager.AddRoom(roomName, msg.Content.HasPassword, msg.Content.Password);
-				const room = this.RoomManager.Get(roomName);
-				if (msg.Content.Key) {
-					//reconnection
-					socket.join(roomName);
-					room.UpdatePlayerId(msg.Content.PlayerName, socket.id);
-				} else {
-					room.AddPlayer(msg.Content.PlayerName, socket.id);
-					socket.join(roomName);
-					this.Server
-						.to(socket.id)
-						.emit(
-							PacketKind[PacketKind.Joined],
-							NetworkMessage.Create<string>(PacketKind.Joined, room.Key)
-						);
-				}
-				this.Server
-					.in(roomName)
-					.emit(
-						PacketKind[PacketKind.Players],
-						NetworkMessage.Create<string[]>(PacketKind.Players, room.GetPlayernames())
-					);
+			const ipInfo = lookup(this.Socket.handshake.address);
+			let country = 'na';
+			if (ipInfo) {
+				country = ipInfo.country;
 			}
-		});
+			this.RoomManager.AddRoom(roomName, country, msg.Content.HasPassword, msg.Content.Password);
+			const room = this.RoomManager.Get(roomName);
+			if (msg.Content.Key) {
+				//reconnection
+				this.Socket.join(roomName);
+				room.UpdatePlayerId(msg.Content.PlayerName, this.Socket.id);
+			} else {
+				room.AddPlayer(msg.Content.PlayerName, this.Socket.id);
+				this.Socket.join(roomName);
+				this.Server
+					.to(this.Socket.id)
+					.emit(PacketKind[PacketKind.Joined], NetworkMessage.Create<string>(PacketKind.Joined, room.Key));
+			}
+			this.Server
+				.in(roomName)
+				.emit(
+					PacketKind[PacketKind.Players],
+					NetworkMessage.Create<string[]>(PacketKind.Players, room.GetPlayernames())
+				);
+		} else {
+			this.Server
+				.to(this.Socket.id)
+				.emit(
+					PacketKind[PacketKind.Error],
+					NetworkMessage.Create<string>(
+						this.Kind,
+						'Name should only contain letter, number and spaces (max 15 characters).'
+					)
+				);
+		}
 	}
 }
