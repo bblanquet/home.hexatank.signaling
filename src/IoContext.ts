@@ -13,6 +13,7 @@ import { GettingAllRoomObs } from './Observers/GettingAllRoomObs.';
 import { HidingRoomObs } from './Observers/HidingRoomObs.';
 import { PasswordObs } from './Observers/PasswordObs.';
 import { PacketKind } from './Message/PacketKind';
+import { Observer } from './Observers/Observer';
 
 export class IoContext {
 	private _ioServer: socketio.Server;
@@ -28,8 +29,7 @@ export class IoContext {
 		this._roomManager = new RoomManager();
 
 		this._ioServer.on(PacketKind[PacketKind.connection], (socket: socketio.Socket) => {
-			const ip = socket.conn.headers['x-forwarded-for'] || socket.conn.remoteAddress.split(':')[3];
-			console.log(`[CONNECTED] ${socket.id} - ${ip}`);
+			console.log(`[CONNECTED] ${socket.id} - ${Observer.GetIp(socket)}`);
 			[
 				new LeavingObs(PacketKind.Leave, this._roomManager, this._ioServer, socket),
 				new PasswordObs(PacketKind.Password, this._roomManager, this._ioServer, socket),

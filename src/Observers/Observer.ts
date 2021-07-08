@@ -13,9 +13,14 @@ export abstract class Observer<T> {
 		this.Socket.on(PacketKind[this.Kind], (message: NetworkMessage<T>) => this.OnExec(message));
 	}
 	protected abstract OnExec(message: NetworkMessage<T>): void;
-	protected GetIp(): string {
-		const ip = this.Socket.conn.headers['x-forwarded-for'] || this.Socket.conn.remoteAddress.split(':')[3];
-		console.log(`[IP] ${this.Socket.id} - ${ip}`);
+	public static GetIp(socket: socketio.Socket): string {
+		let ip = socket.conn.remoteAddress.split(':')[3];
+		try {
+			ip = socket.conn.headers['X-Real-IP'];
+		} catch (error) {
+			console.log('no reverse proxy');
+		}
+		console.log(`[IP] ${socket.id} - ${ip}`);
 		return ip;
 	}
 }
