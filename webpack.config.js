@@ -9,9 +9,9 @@ module.exports = (env) => {
 		target: 'node',
 		externals: [ nodeExternals() ],
 		entry: [ './src/App.ts' ],
-		optimization: {
-			minimizer: [ new UglifyJsPlugin() ]
-		},
+		// optimization: {
+		// 	minimizer: [ new UglifyJsPlugin() ]
+		// },
 		stats: {
 			errorDetails: true // --display-error-details
 		},

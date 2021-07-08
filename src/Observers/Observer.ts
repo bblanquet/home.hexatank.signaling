@@ -16,7 +16,10 @@ export abstract class Observer<T> {
 	public static GetIp(socket: socketio.Socket): string {
 		let ip = socket.conn.remoteAddress.split(':')[3];
 		try {
-			ip = socket.conn.headers['X-Real-IP'];
+			Object.keys(socket.request.headers).forEach((h) => {
+				console.log(h);
+			});
+			ip = socket.request.headers['X-Real-IP'];
 		} catch (error) {
 			console.log('no reverse proxy');
 		}
