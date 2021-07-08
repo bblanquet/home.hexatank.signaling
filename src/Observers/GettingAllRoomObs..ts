@@ -10,10 +10,10 @@ export class GettingAllRoomObs extends Observer<string> {
 
 		const freeRooms = this.RoomManager.Rooms
 			.filter((r) => r.IsFree())
-			//.filter((r) => filter === '' || r.Name.includes(filter))
-			.map((room) => new RoomInfo(room.Name, room.Country, room.PlayersCount(), room.HasPassword, room.Max));
-		//.slice(0, 20);
-		console.log('[REQUESTING ROOMS] [' + freeRooms.length + '] ' + this.Socket.id);
+			.filter((r) => filter === '' || r.Name.includes(filter))
+			.map((room) => new RoomInfo(room.Name, room.Country, room.PlayersCount(), room.HasPassword, room.Max))
+			.filter((u, i) => i < 20);
+		console.log(`[ALL ROOMS] ${filter} ${freeRooms.length} ${this.Socket.id}`);
 
 		if (mg)
 			this.Server

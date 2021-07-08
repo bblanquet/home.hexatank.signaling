@@ -32,7 +32,7 @@ export class AvailableRoomObs extends Observer<GuestMessage> {
 					PacketKind[PacketKind.Error],
 					NetworkMessage.Create<string>(
 						this.Kind,
-						'Name should only contain letter, number and spaces (max 15 characters).'
+						'Name should only contain letter, number and spaces (max 30 characters).'
 					)
 				);
 		}

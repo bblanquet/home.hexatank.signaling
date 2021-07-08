@@ -1,3 +1,7 @@
+import { Usernames } from './Names';
+import { Room } from './Structure/Room';
+import { RoomInfo } from './Structure/RoomInfo';
+
 export class ContentChecker {
 	public static IsOk(str: string): boolean {
 		if (ContentChecker.IsContentOk(str)) {
@@ -20,9 +24,18 @@ export class ContentChecker {
 	}
 
 	public static Format(str: string): string {
-		if (str !== undefined && str !== null) {
+		if (this.IsNotNull(str)) {
 			return str;
 		}
 		return '';
+	}
+
+	public static GetFakeRooms(): Room[] {
+		return Usernames.map((username) => {
+			const room = new Room();
+			room.Name = username;
+			room.Country = 'fr';
+			return room;
+		});
 	}
 }
