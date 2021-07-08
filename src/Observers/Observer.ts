@@ -13,4 +13,8 @@ export abstract class Observer<T> {
 		this.Socket.on(PacketKind[this.Kind], (message: NetworkMessage<T>) => this.OnExec(message));
 	}
 	protected abstract OnExec(message: NetworkMessage<T>): void;
+	protected GetIp(): string {
+		console.log(`[IP] ${this.Socket.id} - ${this.Socket.conn.remoteAddress.split(':')[3]}`);
+		return this.Socket.conn.remoteAddress.split(':')[3];
+	}
 }

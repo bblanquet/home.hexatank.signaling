@@ -14,7 +14,7 @@ export class JoiningObs extends Observer<GuestMessage> {
 		) {
 			console.log(`[JOIN REQUEST] ${msg.Content.RoomName}`);
 			const roomName = msg.Content.RoomName;
-			const ipInfo = lookup(this.Socket.handshake.address);
+			const ipInfo = lookup(this.GetIp());
 			let country = 'na';
 			if (ipInfo) {
 				country = ipInfo.country;

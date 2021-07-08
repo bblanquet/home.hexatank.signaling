@@ -28,7 +28,7 @@ export class IoContext {
 		this._roomManager = new RoomManager();
 
 		this._ioServer.on(PacketKind[PacketKind.connection], (socket: socketio.Socket) => {
-			console.log('[CONNECTED] ' + socket.id);
+			console.log(`[CONNECTED] ${socket.id} - ${socket.conn.remoteAddress.split(':')[3]}`);
 			[
 				new LeavingObs(PacketKind.Leave, this._roomManager, this._ioServer, socket),
 				new PasswordObs(PacketKind.Password, this._roomManager, this._ioServer, socket),
