@@ -57,9 +57,9 @@ export class RoomManager {
 			return p !== undefined;
 		});
 		if (p !== undefined) {
-			return '';
-		} else {
 			return p.Name;
+		} else {
+			return '';
 		}
 	}
 }
