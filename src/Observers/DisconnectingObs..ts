@@ -10,6 +10,6 @@ export class DisconnectingObs extends Observer<GuestMessage> {
 				this.RoomManager.RemoveRoom(room.Name);
 			}
 		});
-		console.log('[DISCONNECTED] ' + this.Socket.id);
+		console.log(`[DISCONNECTED] ${this.Socket.id} ${this.RoomManager.GetNameFrom(this.Socket.id)} `);
 	}
 }

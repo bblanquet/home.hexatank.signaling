@@ -43,6 +43,10 @@ export class Room {
 		return this.Players.some((p) => p.Id === playerId);
 	}
 
+	public GetPlayerFromId(playerId: string): Player {
+		return this.Players.find((p) => p.Id === playerId);
+	}
+
 	public AddPlayer(name: string, id: string) {
 		console.log(`[ROOM] ${this.Name} [ADDED] [PLAYER] ${name}`);
 		let player = new Player();

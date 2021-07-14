@@ -1,3 +1,4 @@
+import { Player } from './Player';
 import { Room } from './Room';
 
 export class RoomManager {
@@ -47,5 +48,18 @@ export class RoomManager {
 
 	GetRoomsFrom(playerId: string): Room[] {
 		return this.Rooms.filter((room) => room.ExistId(playerId));
+	}
+
+	GetNameFrom(playerId: string): string {
+		let p: Player = undefined;
+		this.Rooms.some((room) => {
+			p = room.GetPlayerFromId(playerId);
+			return p !== undefined;
+		});
+		if (p !== undefined) {
+			return '';
+		} else {
+			return p.Name;
+		}
 	}
 }
