@@ -1,14 +1,25 @@
 import { Usernames } from './Names';
 import { Room } from './Structure/Room';
-import { RoomInfo } from './Structure/RoomInfo';
 
 export class ContentChecker {
 	public static IsOk(str: string): boolean {
-		if (ContentChecker.IsContentOk(str)) {
-			console.log(`ok ${str}`);
-		}
+		return (
+			ContentChecker.IsContentOk(str) &&
+			ContentChecker.IsNotNull(str) &&
+			ContentChecker.IsContentOk(str) &&
+			ContentChecker.IsSizeOk(str)
+		);
+	}
 
-		return ContentChecker.IsNotNull(str) && ContentChecker.IsContentOk(str) && ContentChecker.IsSizeOk(str);
+	public static IsPasswordOK(str: string): boolean {
+		return (
+			str === undefined ||
+			(ContentChecker.IsContentOk(str) && ContentChecker.IsMaxSizeOk(str) && ContentChecker.IsContentOk(str))
+		);
+	}
+
+	private static IsMaxSizeOk(str: string): boolean {
+		return str.length < 30;
 	}
 
 	private static IsSizeOk(str: string): boolean {
@@ -32,8 +43,7 @@ export class ContentChecker {
 
 	public static GetFakeRooms(): Room[] {
 		return Usernames.map((username) => {
-			const room = new Room();
-			room.Name = username;
+			const room = new Room(username, undefined);
 			room.Country = 'fr';
 			return room;
 		});

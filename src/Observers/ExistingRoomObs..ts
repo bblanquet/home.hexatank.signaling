@@ -9,7 +9,7 @@ export class ExistingRoomObs extends Observer<GuestMessage> {
 		if (ContentChecker.IsOk(msg.Content.RoomName) && ContentChecker.IsOk(msg.Content.PlayerName)) {
 			console.log(`[EXIST REQUEST] ${msg.Content.RoomName}`);
 			const message = NetworkMessage.Create<{ Exist: boolean; RoomName: string }>(this.Kind, {
-				Exist: this.RoomManager.Exist(msg.Content.RoomName),
+				Exist: this.Root.Exist(msg.Content.RoomName),
 				RoomName: msg.Content.RoomName
 			});
 			this.Server.to(this.Socket.id).emit(PacketKind[this.Kind], message);

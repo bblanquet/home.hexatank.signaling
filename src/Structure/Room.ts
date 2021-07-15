@@ -1,26 +1,27 @@
+import { Dictionary } from '../Utils/Dictionary';
 import { Player } from './Player';
 
 export class Room {
-	public Players: Player[];
-	public Password: string;
-	public HasPassword: boolean;
+	public Players: Dictionary<Player>;
+	public PlayersById: Dictionary<Player>;
+	public Password: string | undefined;
 	public Key: string;
 	public IsHidden: boolean;
 	public Name: string;
 	public Max: number = 4;
 	public Country: string;
 
-	constructor() {
+	constructor(name: string, password: string | undefined) {
 		this.Key = Math.random().toString(36).substring(7);
 		this.IsHidden = false;
-		this.Password = '';
-		this.HasPassword = false;
-		this.Name = '';
-		this.Players = [];
+		this.Password = password;
+		this.Name = name;
+		this.Players = new Dictionary<Player>();
+		this.PlayersById = new Dictionary<Player>();
 	}
 
-	public PlayersCount(): number {
-		return this.Players.length;
+	public HasPassword(): boolean {
+		return this.Password !== undefined;
 	}
 
 	public IsFree(): boolean {
@@ -28,50 +29,40 @@ export class Room {
 	}
 
 	public IsEmpty(): boolean {
-		return this.GetPlayernames.length === 0;
+		return this.GetPlayernames().length === 0;
 	}
 
 	public IsFull(): boolean {
-		return this.Players.length === this.Max;
+		return this.Players.Count() === this.Max;
 	}
 
-	public Exist(playerName: string) {
-		return this.Players.some((p) => p.Name === playerName);
+	public ExistId(id: string) {
+		return this.PlayersById.Exist(id);
 	}
 
-	public ExistId(playerId: string) {
-		return this.Players.some((p) => p.Id === playerId);
+	public GetPlayerFromId(id: string): Player {
+		return this.PlayersById.Get(id);
 	}
 
-	public GetPlayerFromId(playerId: string): Player {
-		return this.Players.find((p) => p.Id === playerId);
+	public Add(player: Player) {
+		console.log(`[ROOM] ${this.Name} [ADDED] [PLAYER] ${player.Name}`);
+		this.Players.Add(player.Name, player);
+		this.PlayersById.Add(player.Id, player);
 	}
 
-	public AddPlayer(name: string, id: string) {
-		console.log(`[ROOM] ${this.Name} [ADDED] [PLAYER] ${name}`);
-		let player = new Player();
-		player.Name = name;
-		player.Id = id;
-		this.Players.push(player);
+	public GetPlayernames(): string[] {
+		return this.Players.Keys();
 	}
 
-	public UpdatePlayerId(name: string, id: string) {
-		console.log(`[ROOM] ${this.Name} [UPDATED]  [PLAYER] ${name}`);
-		this.RemovePlayer(name);
-		let player = new Player();
-		player.Name = name;
-		player.Id = id;
-		this.Players.push(player);
+	public RemoveFromId(id: string) {
+		const player = this.PlayersById.Get(id);
+		this.Players.Remove(player.Name);
+		this.PlayersById.Remove(player.Id);
 	}
 
-	public GetPlayernames() {
-		return this.Players.map((p) => p.Name);
-	}
-
-	public RemovePlayer(playerName: string) {
-		if (this.Exist(playerName)) {
-			console.log(`[DELETED] [ROOM] ${this.Name} [PLAYER] ${playerName}`);
-		}
-		this.Players = this.Players.filter((p) => p.Name !== playerName);
+	public RemoveFromName(name: string) {
+		const player = this.Players.Get(name);
+		this.Players.Remove(player.Name);
+		this.PlayersById.Remove(player.Id);
 	}
 }

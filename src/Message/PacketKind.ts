@@ -1,7 +1,7 @@
 export enum PacketKind {
 	connect,
+	reconnect,
 	connect_error,
-	connection,
 	disconnect,
 	Remove,
 	Create,
@@ -52,5 +52,7 @@ export enum PacketKind {
 	FieldChanged,
 	SyncStart,
 	SyncLoaded,
-	SyncBlueprint
+	SyncBlueprint,
+
+	connection
 }

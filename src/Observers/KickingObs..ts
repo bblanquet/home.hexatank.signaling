@@ -5,11 +5,11 @@ import { Observer } from './Observer';
 
 export class KickingObs extends Observer<GuestMessage> {
 	protected OnExec(msg: NetworkMessage<GuestMessage>): void {
-		if (this.RoomManager.Exist(msg.Content.RoomName)) {
-			let room = this.RoomManager.Get(msg.Content.RoomName);
-			if (room.Exist(msg.Content.PlayerName)) {
+		if (this.Root.Exist(msg.Content.RoomName)) {
+			let room = this.Root.Rooms.Get(msg.Content.RoomName);
+			if (room.Players.Exist(msg.Content.PlayerName)) {
 				console.log(`[KICKING REQUEST] ${msg.Content.RoomName} ${msg.Content.PlayerName}`);
-				room.RemovePlayer(msg.Content.PlayerName);
+				room.RemoveFromName(msg.Content.PlayerName);
 				this.Server
 					.in(msg.Content.RoomName)
 					.emit(PacketKind[this.Kind], NetworkMessage.Create<string>(this.Kind, msg.Content.PlayerName));

@@ -6,7 +6,7 @@ import { NetworkMessage } from '../Message/NetworkMessage';
 export abstract class Observer<T> {
 	constructor(
 		protected Kind: PacketKind,
-		protected RoomManager: RoomManager,
+		protected Root: RoomManager,
 		protected Server: socketio.Server,
 		protected Socket: socketio.Socket
 	) {

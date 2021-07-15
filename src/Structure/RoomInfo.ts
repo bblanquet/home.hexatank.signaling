@@ -1,4 +1,4 @@
-export class RoomInfo {
+export class RoomDetail {
 	constructor(
 		public Name: string,
 		public Country: string,

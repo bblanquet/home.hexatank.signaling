@@ -1,65 +1,44 @@
-import { Player } from './Player';
+import { Dictionary } from '../Utils/Dictionary';
 import { Room } from './Room';
 
 export class RoomManager {
-	public Rooms: Room[];
+	public Rooms: Dictionary<Room>;
 	constructor() {
-		this.Rooms = [];
+		this.Rooms = new Dictionary<Room>();
 	}
 
 	Exist(roomName: string): boolean {
-		let count = this.Rooms.filter((r) => r.Name === roomName).length;
-		return 0 < count;
+		return this.Rooms.Exist(roomName);
 	}
 
 	MatchPassword(roomName: string, password: string): boolean {
-		const room = this.Get(roomName);
-		return !room.HasPassword || this.Get(roomName).Password === password;
+		const room = this.Rooms.Get(roomName);
+		return !room.HasPassword() || room.Password === password;
 	}
 
-	ExistAndHasPassword(roomName: string) {
-		return this.Exist(roomName) && this.Get(roomName).HasPassword;
-	}
-
-	AddRoom(roomName: string, country: string, hasPassword: boolean, password: string) {
-		if (!this.Exist(roomName)) {
-			let room = new Room();
-			room.Country = country;
-			room.Password = password === undefined ? '' : password;
-			room.HasPassword = hasPassword === undefined ? false : hasPassword;
-			room.Name = roomName;
-			this.Rooms.push(room);
-			console.log(`[ADDED] [ROOM] ${roomName} [PASSWORD=${room.HasPassword}] ${room.Password}`);
+	Add(room: Room) {
+		if (!this.Exist(room.Name)) {
+			this.Rooms.Add(room.Name, room);
+			console.log(`[ADDED] [ROOM] ${room.Name} [PASSWORD=${room.HasPassword()}] ${room.Password}`);
 		}
 	}
 
-	RemoveRoom(roomName: string) {
+	Remove(roomName: string) {
 		if (this.Exist(roomName)) {
 			console.log(`[DELETED] [ROOM] ${roomName}`);
+			this.Rooms.Remove(roomName);
 		}
-		this.Rooms = this.Rooms.filter((r) => r.Name !== roomName);
 	}
 
-	Get(roomName: string) {
-		const room = this.Rooms.filter((r) => r.Name === roomName)[0];
-		console.log(`[GET] [ROOM] ${room.Name} [PASSWORD=${room.HasPassword}]`);
-		return room;
-	}
-
-	GetRoomsFrom(playerId: string): Room[] {
-		return this.Rooms.filter((room) => room.ExistId(playerId));
+	GetRoomsFrom(playerId: string): Room {
+		return this.Rooms.Values().find((room) => room.ExistId(playerId));
 	}
 
 	GetNameFrom(playerId: string): string {
-		let p: Player = undefined;
-		this.Rooms.some((room) => {
-			p = room.GetPlayerFromId(playerId);
-			return p !== undefined;
-		});
-		if (p !== undefined) {
-			return p.Name;
-		} else {
-			return '';
+		const room = this.Rooms.Values().find((r) => r.ExistId(playerId));
+		if (room) {
+			return room.GetPlayerFromId(playerId).Name;
 		}
+		return '';
 	}
 }
