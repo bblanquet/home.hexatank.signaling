@@ -3,12 +3,7 @@ import { Room } from './Structure/Room';
 
 export class ContentChecker {
 	public static IsOk(str: string): boolean {
-		return (
-			ContentChecker.IsContentOk(str) &&
-			ContentChecker.IsNotNull(str) &&
-			ContentChecker.IsContentOk(str) &&
-			ContentChecker.IsSizeOk(str)
-		);
+		return ContentChecker.IsContentOk(str) && ContentChecker.IsNotNull(str) && ContentChecker.IsSizeOk(str);
 	}
 
 	public static IsPasswordOK(str: string): boolean {
